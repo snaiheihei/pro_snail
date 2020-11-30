@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>wavy progress bar</title>
+	<style type="text/css">
+		body{
+			margin: 0px;
+			padding: 0px;
+			height: 100vh;
+			width: 100vw;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.container{
+			width: 200px;
+			height: 200px;
+			border: solid 5px #007fff;
+			border-radius: 50%;
+			padding: 5px;
+			overflow: hidden;
+		}
+		.wave{
+			position: relative;
+			width:200px;
+			height: 200px;
+			background-color: #007fff;
+			border-radius: 50%;
+		}
+		.wave::before{
+			content: "";
+			position: absolute;
+			width: 400px;
+			height: 400px;
+			background-color:rgba(255,255,255,1);
+			border-radius: 40%;
+			left: 50%;
+			top:0;
+			transform: translate(-50%, -30%);
+			animation: rotate 12s ease-out infinite;
+		}
+		.wave::after{
+			content: "";
+			position: absolute;
+			width: 430px;
+			height: 430px;
+			background-color: rgba(255,255,255,0.2);
+			border-radius: 47%;
+			left: 50%;
+			top:0;
+			transform: translate(-50%, -50%);
+			animation: rotate 12s ease-out infinite;
+		}
+		@keyframes rotate {
+			100%{
+				transform: translate(-50%,-100%)
+				rotate(360deg);
+			}	
+		}
+		.bubble{
+			width: 8px;
+			height: 8px;
+			background-color: #fff;
+			border-radius: 50%;
+			position: absolute;
+			opacity: 0.6;
+			animation-name: bubble-up;
+			animation-timing-function: linear;
+			animation-iteration-count: infinite;
+
+		}
+		.bubble:nth-child(1){
+			left: 20%;
+			top:80%;
+			animation-duration: 1.2s;
+		}
+		.bubble:nth-child(2){
+			left: 56%;
+			top:85%;
+			animation-duration: 2s;
+		}
+		.bubble:nth-child(3){
+			left: 70%;
+			top:75%;
+			animation-duration: 1.6s;
+		}
+		.bubble:nth-child(4){
+			left: 32%;
+			top:90%;
+			animation-duration: 1.5s;
+		}
+		.bubble:nth-child(5){
+			left: 85%;
+			top:69%;
+			animation-duration: 2.2s;
+		}
+		@keyframes bubble-up {
+			25%{
+				transform: translate(12px,-50px);
+			}
+			50%{
+				transform: translate(0px,-100px);
+			}
+			25%{
+				transform: translate(-12px,-150px);
+			}
+			25%{
+				transform: translate(0px,-200px);
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="wave">
+			<div class="bubble"></div>
+			<div class="bubble"></div>
+			<div class="bubble"></div>
+			<div class="bubble"></div>
+			<div class="bubble"></div>
+		</div>
+	</div>
+	
+</body>
+</html>

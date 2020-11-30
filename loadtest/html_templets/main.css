@@ -1,0 +1,262 @@
+.body,h2,input{
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+}
+.body{
+	font-family: Microsoft YaHei;
+}
+.table {
+	position: relative;
+	background-color: #E5F6EF;
+	width: 700px;
+	height: 800px;
+	margin: 0px auto;
+	
+
+}
+.title h2{
+	/*height: 50px;*/
+	border: 1px solid lightgray;
+	font-weight: normal;
+	text-align: center;
+	text-indent: -130px;
+	/*color: lightgray;*/
+	line-height: 40px;
+
+}
+.title img{
+	float: left;
+	height: 42px;
+}
+
+ul{
+	margin-top: 25px;
+}
+li{
+	height: 45px;
+	list-style: none;
+	font-size: 20px;
+
+}
+li label{
+	display: inline-block;
+	width: 283px;
+	height: 40px;
+	line-height: 40px;
+}
+li input{
+	display: inline-block;
+	width: 150px;
+	height: 35px;
+	outline: none;
+	text-indent: 0.5em;
+	line-height: 35px;
+
+}
+.start button{
+	display: inline-block;
+	margin: auto;
+	margin-left: 40px;
+	padding: 0px;
+	width: 80px;
+	height: 32px;
+	line-height: 26px;
+	font-size: 16px;
+}
+.start button:hover{
+	background-color: lightyellow;
+	cursor: pointer;
+	outline: none;
+}
+.start img{
+	float: right;
+	margin-right: 480px;
+	height: 40px;
+	width:50px;
+	border-radius: 10px;
+}
+.start img:hover{
+	background-color: lightyellow;
+	cursor: pointer;
+	outline: none;
+}
+
+/*条状进度条*/
+.progress-bar{
+	width: 500px;
+	height: 30px;
+	border: solid 1px #fff;
+	border-radius: 5px;
+	/*transform: scale(1.5);*/
+	/*background-color: red;*/
+}
+.progress-grow{
+	width: 100%;
+	height: 30px;
+	border-radius: 5px;
+	background: repeating-linear-gradient(45deg, #eee 0px, #eee 15px, #3158c4 16px, #3158c4 30px);
+	background-size: 42px 30px;
+	background-position: 0 0;
+	animation: grow 1s linear infinite;
+	transition: 0.6s;
+}
+@keyframes grow{
+	0%{
+		background-position: 0 0;
+	}
+	100%{
+		background-position: 42px 0;
+	}	
+}
+.bar{
+	margin-top: 15px;
+	margin-left: 40px;
+	height: 32px;
+}
+.bar button{
+	/*display: inline-block;*/
+	float: left;
+	padding: 0px;
+	height: 32px;
+	width: 80px;
+	line-height: 26px;
+	font-size: 16px;
+}
+.bar button:hover{
+	background-color: lightyellow;
+	cursor: pointer;
+	outline: none;
+}
+.bar .progress-bar{
+	display: inline-block;
+	margin-left: 10px;
+	height: 30px;
+	width: 360px;
+	line-height: 30px;
+}
+.bar label{
+	/*display: inline-block;*/
+	float: left;
+	margin-left: 10px;
+	border: solid 1px lightyellow;
+	width: 120px;
+	height: 32px;
+	line-height: 32px;
+	font-size: 20px;
+	color: green;
+	text-align: center;
+}
+.tail{
+	margin-top: 60px;
+	text-align: center;
+	font-size: 20px;
+}
+/*脱离文档流元素*/
+
+.angle{
+	height: 150px;
+	width: 150px;
+	position: absolute;
+	top:70px;
+	right: 0px;
+}
+.container{
+	position: absolute;
+	width: 100px;
+	height: 100px;
+	border: solid 2px #007fff;
+	border-radius: 50%;
+	padding: 2px;
+	overflow: hidden;
+	right: 50px;
+	top: 300px;
+}
+.wave{
+	position: relative;
+	width:100px;
+	height: 100px;
+	background-color: #007fff;
+	border-radius: 50%;
+}
+.wave::before{
+	content: "";
+	position: absolute;
+	width: 200px;
+	height: 200px;
+	background-color:rgba(201,236,220,1);
+	border-radius: 40%;
+	left: 50%;
+	top:0;
+	transform: translate(-50%, -30%);
+	animation: rotate 12s ease-out infinite;
+}
+.wave::after{
+	content: "";
+	position: absolute;
+	width: 215px;
+	height: 215px;
+	background-color: rgba(201,236,220,0.2);
+	border-radius: 47%;
+	left: 50%;
+	top:0;
+	transform: translate(-50%, -50%);
+	animation: rotate 12s ease-out infinite;
+}
+@keyframes rotate {
+	100%{
+		transform: translate(-50%,-100%)
+		rotate(360deg);
+	}	
+}
+.bubble{
+	width: 4px;
+	height: 4px;
+	background-color: rgba(201,236,220,1);
+	border-radius: 50%;
+	position: absolute;
+	opacity: 0.6;
+	animation-name: bubble-up;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+
+}
+.bubble:nth-child(1){
+	left: 20%;
+	top:80%;
+	animation-duration: 1.2s;
+}
+.bubble:nth-child(2){
+	left: 56%;
+	top:85%;
+	animation-duration: 2s;
+}
+.bubble:nth-child(3){
+	left: 70%;
+	top:75%;
+	animation-duration: 1.6s;
+}
+.bubble:nth-child(4){
+	left: 32%;
+	top:90%;
+	animation-duration: 1.5s;
+}
+.bubble:nth-child(5){
+	left: 85%;
+	top:69%;
+	animation-duration: 2.2s;
+}
+@keyframes bubble-up {
+	25%{
+		transform: translate(6px,-25px);
+	}
+	50%{
+		transform: translate(0px,-50px);
+	}
+	75%{
+		transform: translate(-12px,-75px);
+	}
+	100%{
+		transform: translate(0px,-50px);
+	}
+}

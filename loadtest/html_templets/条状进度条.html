@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style type="text/css">
+
+		.progress-bar{
+			width: 500px;
+			height: 30px;
+			border: solid 1px #fff;
+			border-radius: 5px;
+			/*transform: scale(1.5);*/
+			/*background-color: red;*/
+		}
+		.progress-grow{
+			width: 20%;
+			height: 30px;
+			border-radius: 5px;
+			background: repeating-linear-gradient(45deg, #eee 0px, #eee 15px, #3158c4 16px, #3158c4 30px);
+			background-size: 42px 30px;
+			background-position: 0 0;
+			animation: grow 1s linear infinite;
+			transition: 0.6s;
+		}
+		@keyframes grow{
+			0%{
+				background-position: 0 0;
+			}
+			100%{
+				background-position: 42px 0;
+			}	
+		}
+		.progress-bar:hover .progress-grow{
+			width: 100%;
+
+		}
+	</style>
+</head>
+<body>
+	<div class="progress-bar">
+		<div class="progress-grow">
+			
+		</div>
+		
+	</div>
+</body>
+</html>

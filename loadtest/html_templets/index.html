@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Hellow Vue</title>
+
+	<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+	
+	<div class="table" id="app">
+		<div class="title">
+			<img src="./img/title.png" alt="标题ICON">
+			<h2>媒体直播间压测</h2>
+		</div>
+		<ul>
+			<li>
+				<label>room_id（测试直播间号）</label> 
+				<input type="text" placeholder="测试直播间room_id" v-model='room_id'>
+			</li>
+			<li>
+				<label>user_id（并发用户ID）</label>
+				<input type="input" placeholder="并发用户ID" v-model='uid'>
+			</li>
+			<li>
+				<label>gift_id（礼物ID）</label> 
+				<input type="text" placeholder="礼物ID" v-model='gids'>
+			</li>
+			<li>
+				<label>gift_name（礼物名称）</label> 
+				<input type="text" placeholder="礼物名称" v-model='gift_name'> 
+			</li>
+			<li>
+				<label>client_num（并发用户数）</label> 
+				<input type="text" placeholder="并发用户数" v-model='client_num'>
+			</li>
+			<li>
+				<label>hatch_rate（启动用户数/秒）</label> 
+				<input type="text" placeholder="每秒启动用户数" v-model='hatch_rate'>
+			</li>
+			<li>
+				<label>expire（压测时间）</label> 
+				<input type="text" placeholder="压测时间（秒）" v-model='expire'>
+			</li>
+			<li>
+				<label>img_url（礼物图片url）</label> 
+				<input type="text" placeholder="礼物图片url" disabled="true" style="text-decoration: line-through;">
+			</li>
+
+		</ul>
+		<div class="start">
+			<button @click=run>启动任务</button>
+			<img src="./img/start.gif" title="不要点我~">
+		</div>
+		<div class="bar" v-for='(item,index) in pid_arr'>
+			<button @click=stop(index)>KILL</button>
+			<label >pid：{{item}}</label>
+			<div class="progress-bar"> 
+				<div class="progress-grow">	
+				</div> 
+			</div>
+		</div>
+		
+		<div class="tail">
+			<p>
+				<span>Copyright（snail）</span>
+				<span class="date">日期</span>
+				<span class="h">h</span><span class="m">m</span><span class="s">s</span>
+			</p>
+		</div>
+		<!-- 脱离文档流，动态图片 -->
+		<img src="./img/angle.gif" class="angle" v-show='pid_arr.length > 0' >
+		<div class="container" >
+			<div class="wave" >
+				<div class="bubble"></div>
+				<div class="bubble"></div>
+				<div class="bubble"></div>
+				<div class="bubble"></div>
+				<div class="bubble"></div>
+			</div>
+		</div>
+	</div>
+
+
+	<script type="text/javascript">
+		function getDate(){
+			var date = new Date()
+			var  year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var dates = date.getDate();
+			var arr = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六']
+			var day = date.getDay()
+			return year + '年' + month + '月' + dates + '日  ' + arr[day]
+		}
+		var el_date = document.querySelector('.date')
+		el_date.innerHTML = getDate()
+		var el_h = document.querySelector('.h')
+		var el_m = document.querySelector('.m')
+		var el_s = document.querySelector('.s')
+		// 开启定时器
+		getTime() //先调用一次，防止第一次刷新页面空白
+		// mac中定时器失效了
+		// setInterval(getTime,1000)
+		function getTime(){
+			var date = new Date();
+			var h = date.getHours();
+			h = h <10 ? '0' + h : h;
+			el_h.innerHTML = h+':'
+			var m = date.getMinutes();
+			m = m <10 ? '0' + m : m;
+			el_m.innerHTML = m + ':'
+			var s = date.getSeconds();
+			s = s <10 ? '0' + s : s;
+			el_s.innerHTML = s 
+		}
+	</script>
+
+	<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+	<!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"> </script> -->
+
+	<!-- 生产环境版本，优化了尺寸和速度 -->
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<!-- xmlHTTPrequest 包 -->
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script type="text/javascript">
+		var app = new Vue({
+			el:'#app',
+			data:{
+				room_id:'',
+				uid: '',
+				gids: '',
+				client_num: '',
+				hatch_rate: '',
+				expire: '',
+				gift_name: '',
+				task_num: 0,
+				pid_arr:[],
+
+			},
+			methods:{
+				run:function(){
+					if(this.pid_arr.length < 3){
+						console.log(this.pid_arr.length > 0 )
+						var that = this
+						
+						console.log('http://0.0.0.0:8080/livetool/createTask?room_id='+ that.room_id +'&uid='+ that.uid+'&gids='+ that.gids +'&client_num=' + that.client_num+'&hatch_rate='+ that.hatch_rate +'&expire='+ that.expire+'&gift_name='+that.gift_name +'')
+						axios.get('http://0.0.0.0:8080/livetool/createTask?room_id='+ that.room_id +'&uid='+ that.uid+'&gids='+ that.gids +'&client_num=' + that.client_num+'&hatch_rate='+ that.hatch_rate +'&expire='+ that.expire+'&gift_name='+that.gift_name +'').then(
+							function(response){
+								if(response.data.pid != undefined){
+									that.pid_arr.push(response.data.pid)
+									that.task_num++
+									console.log(that.task_num)
+									// console.log(that.pid_arr)
+								}else{alert(response.data.errno+'：'+response.data.errmsg)}
+								
+							},function(err){alert(err)}
+							)
+					}else{alert('只支持同时启动三个任务')}
+					
+				},
+				stop:function(index){
+					if(this.pid_arr.length > 0){
+						this.task_num--
+						
+						var that = this
+						console.log('http://0.0.0.0:8080/livetool/stopTask?pid='+ this.pid_arr[index] +'')
+						axios.get('http://0.0.0.0:8080/livetool/stopTask?pid='+ this.pid_arr[index] +'').then(function(response){
+							// console.log(response)
+							console.log(that.task_num)
+						},function(err){})
+						this.pid_arr.splice(index,1)
+					}
+				}
+
+
+			}
+
+		})
+
+
+	</script>
+</body>
+</html>
+
+
+<!-- Vue.js 的核心是一个允许采用简洁的模板语法来声明式地将数据渲染进 DOM 的系统： -->
+<!-- 现在数据和 DOM 已经被建立了关联，所有东西都是响应式的 -->
